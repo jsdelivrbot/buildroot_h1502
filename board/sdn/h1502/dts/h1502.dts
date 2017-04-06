@@ -25,9 +25,6 @@
 
 	/delete-node/sound;
         /delete-node/1wire_cm;
-	//delete-node/i2c@0;
-	//delete-node/i2c@1;
-	//delete-node/i2c@2;
 	/delete-node/i2c-gpio-0;
 	/delete-node/i2c-gpio-1;
         /delete-node/i2c-gpio-2;
@@ -200,19 +197,19 @@
                 };
 	};
 
-	pwm-beeper {
+	buzzer {
 		compatible = "pwm-beeper";
-		pwms = <&pwm0 3 1000000 1>; // 1kHz
+		pwms = <&pwm 3 1000000 1>; // 1kHz
 		//pinctrl-names = "default";
 		//pinctrl-0 = <&pinctrl_pwm0_pwm3_1>;
 	};
 
-	//backlight {
-	//	compatible = "pwm-backlight";
-	//	pwms = <&pwm0 0 1000000 1>; // 1khz
-	//	brightness-levels = <0 4 8 16 32 64 128 255>;
-	//	default-brightness-level = <6>;
-	//};
+	backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm 0 1000000 1>; // 1khz
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <6>;
+	};
 
 	ahb {
 		apb {
@@ -247,9 +244,8 @@
 				atmel,wakeup-rtc-timer;
 			};
 
-			pwm0: pwm@f8034000 {
+			pwm: pwm@f8034000 {
 				status = "okay";
-				//#pwm-cells = <3>;
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_pwm0_pwm0_2 /* PC18 */
 					     &pinctrl_pwm0_pwm1_2 /* PC19 */
@@ -282,20 +278,28 @@
 				/delete-property/atmel,adc-ts-wires;
 				/delete-property/atmel,adc-ts-pressure-threshold;	
 
-				trigger@0 {
+				trigger0 {
 					trigger-name = "external-any";
+					trigger-value = <0x3>;
+					trigger-external;
 				};
 
-				trigger@1 {
+				trigger1 {
                                         trigger-name = "external-any";
+					trigger-value = <0x3>;
+					trigger-external;
                                 };
 
-				trigger@2 {
+				trigger2 {
                                         trigger-name = "external-any";
+					trigger-value = <0x3>;
+					trigger-external;
                                 };
 				
-				trigger@3 {
+				trigger3 {
                                         trigger-name = "external-any";
+					trigger-value = <0x3>;
+					trigger-external;
                                 };
 			};
 
