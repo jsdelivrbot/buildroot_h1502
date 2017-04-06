@@ -1,0 +1,345 @@
+/*
+ * h1502.dts - Device Tree file for H1502 board
+ *
+ *  Copyright (C) 2012 Atmel,
+ *                2012 Nicolas Ferre <nicolas.ferre@atmel.com>
+ *
+ * Licensed under GPLv2 or later.
+ */
+/dts-v1/;
+#include "at91sam9g25.dtsi"
+#include "at91sam9x5ek.dtsi"
+#include <dt-bindings/input/linux-event-codes.h>
+
+/ {
+	model = "SDN H1502 board";
+	compatible = "sdn,h1502", "atmel,at91sam9x5ek", "atmel,at91sam9x5", "atmel,at91sam9";
+
+	aliases {
+		/delete-property/i2c1;
+		/delete-property/i2c2;
+		/delete-property/ssc0;
+		/delete-property/serial3;
+		/delete-property/serial4;
+	};
+
+	/delete-node/sound;
+        /delete-node/1wire_cm;
+	//delete-node/i2c@0;
+	//delete-node/i2c@1;
+	//delete-node/i2c@2;
+	/delete-node/i2c-gpio-0;
+	/delete-node/i2c-gpio-1;
+        /delete-node/i2c-gpio-2;
+
+
+
+	leds {
+		compatible = "gpio-leds";
+		/delete-node/pb18;
+		/delete-node/pd21;
+		
+		heartbeat-pc7 {
+			label = "heartbeat-pc7";
+			gpios = <&pioC 7 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+		heartbeat-pb8 {
+			label = "heartbeat-pb8";
+			gpios = <&pioB 8 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+		hdd {
+			label = "hdd";
+			gpios = <&pioC 8 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "nand-disk";
+		};
+		cpu0 {
+                        label = "cpu0";
+                        gpios = <&pioC 9 GPIO_ACTIVE_HIGH>;
+                        linux,default-trigger = "cpu0";
+                };
+
+		timer {
+                        label = "timer";
+                        gpios = <&pioC 31 GPIO_ACTIVE_HIGH>;
+                        linux,default-trigger = "timer";
+		};    
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+
+		up {
+			label = "up-key";
+			gpios = <&pioC 24 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_UP>;
+			debounce-interval = <10>;
+		};
+		down {
+			label = "down-key";
+			gpios = <&pioC 23 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_DOWN>;
+			debounce-interval = <10>;
+		};
+		left {
+                        label = "left-key";
+                        gpios = <&pioC 25 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_LEFT>;
+			debounce-interval = <10>;
+                };
+		right {
+                        label = "right-key";
+                        gpios = <&pioC 22 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_RIGHT>;
+			debounce-interval = <10>;
+                };
+		enter {
+                        label = "enter-key";
+                        gpios = <&pioC 30 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_ENTER>;
+			debounce-interval = <10>;
+                };
+		esc {
+                        label = "esc-key";
+                        gpios = <&pioC 26 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_ESC>;
+			debounce-interval = <10>;
+                };
+	};
+
+	inputs {
+		compatible = "gpio-keys";
+		
+		input1 {
+			label = "input-1";
+			gpios = <&pioA 29 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_1>;
+			debounce-interval = <10>;
+		};
+		input2 {
+                        label = "input-2";
+                        gpios = <&pioA 28 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_2>;
+                        debounce-interval = <10>;
+                };
+		input3 {
+                        label = "input-3";
+                        gpios = <&pioA 27 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_3>;
+                        debounce-interval = <10>;
+                };
+		input4 {
+                        label = "input-4";
+                        gpios = <&pioA 26 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_4>;
+                        debounce-interval = <10>;
+                };
+		input5 {
+                        label = "input-5";
+                        gpios = <&pioA 25 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_5>;
+                        debounce-interval = <10>;
+                };
+		input6 {
+                        label = "input-6";
+                        gpios = <&pioA 24 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_6>;
+                        debounce-interval = <10>;
+                };
+		input7 {
+                        label = "input-7";
+                        gpios = <&pioA 23 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_7>;
+                        debounce-interval = <10>;
+                };
+		input8 {
+                        label = "input-8";
+                        gpios = <&pioA 22 GPIO_ACTIVE_LOW>;
+                        linux,code = <KEY_8>;
+                        debounce-interval = <10>;
+                };
+	};
+
+	relays {
+		//compatible = "gpio-leds";
+		relay1 {
+			label = "relay1";
+			gpios = <&pioC 17 GPIO_ACTIVE_HIGH>;
+			//line-name = "relay1";
+			//output-low;
+			//gpio-hog;
+		};
+		relay2 {
+                        label = "relay2";
+                        gpios = <&pioC 16 GPIO_ACTIVE_HIGH>;
+                };
+		relay3 {
+                        label = "relay3";
+                        gpios = <&pioC 15 GPIO_ACTIVE_HIGH>;
+                };
+		relay4 {
+                        label = "relay4";
+                        gpios = <&pioC 14 GPIO_ACTIVE_HIGH>;
+                };
+		relay5 {
+                        label = "relay5";
+                        gpios = <&pioC 19 GPIO_ACTIVE_HIGH>;
+                };
+		relay6 {
+                        label = "relay6";
+                        gpios = <&pioC 20 GPIO_ACTIVE_HIGH>;
+                };
+		relay7 {
+                        label = "relay7";
+                        gpios = <&pioC 12 GPIO_ACTIVE_HIGH>;
+                };
+		relay8 {
+                        label = "relay8";
+                        gpios = <&pioC 13 GPIO_ACTIVE_HIGH>;
+                };
+	};
+
+	pwm-beeper {
+		compatible = "pwm-beeper";
+		pwms = <&pwm0 3 1000000 1>; // 1kHz
+		//pinctrl-names = "default";
+		//pinctrl-0 = <&pinctrl_pwm0_pwm3_1>;
+	};
+
+	//backlight {
+	//	compatible = "pwm-backlight";
+	//	pwms = <&pwm0 0 1000000 1>; // 1khz
+	//	brightness-levels = <0 4 8 16 32 64 128 255>;
+	//	default-brightness-level = <6>;
+	//};
+
+	ahb {
+		apb {
+			/delete-node/isi@f8048000;
+			/delete-node/ssc@f0010000;
+			/delete-node/mmc@f000c000;
+			/delete-node/serial@f8024000;
+			/delete-node/i2c@f8014000;
+			/delete-node/i2c@f8018000;
+			/delete-node/serial@f8040000;
+			/delete-node/serial@f8044000;
+			/delete-node/spi@f0004000;
+			/delete-node/serial@f8028000;			
+
+			pinctrl@fffff400 {
+				/delete-node/ssc0;
+				/delete-node/i2c1;
+				/delete-node/i2c2;
+				/delete-node/isi;
+				/delete-node/usart3;
+				/delete-node/mmc1;
+				/delete-node/spi1;
+				/delete-node/i2c_gpio0;
+				/delete-node/i2c_gpio1;
+				/delete-node/i2c_gpio2;
+				/delete-node/1wire_cm;
+				/delete-node/camera_sensor;
+			};
+
+			shdwc@fffffe10 {
+				//atmel,wakeup-mode = "any";
+				atmel,wakeup-rtc-timer;
+			};
+
+			pwm0: pwm@f8034000 {
+				status = "okay";
+				//#pwm-cells = <3>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_pwm0_pwm0_2 /* PC18 */
+					     &pinctrl_pwm0_pwm1_2 /* PC19 */
+					     &pinctrl_pwm0_pwm2_1 /* PC20 */
+					     &pinctrl_pwm0_pwm3_1>; /* PC21 */
+			};
+
+			spi@f0000000 {
+				status = "okay";
+				cs-gpios = <&pioA 14 GPIO_ACTIVE_HIGH>;
+				
+				/delete-node/m25p80@0;
+
+				/*
+				st7565: st7565@0{
+					compatible = "sitronix,st7565";
+					reg = <0>;				
+					spi-max-frequency = <16000000>;
+					buswidth = <8>;
+					dc-gpios = <&pioC 6 GPIO_ACTIVE_HIGH>;
+					reset-gpios = <&pioC 5 GPIO_ACTIVE_HIGH>;
+					led-gpios = <&pioC 18 GPIO_ACTIVE_HIGH>;
+					debug = <0>;
+					verbose = <3>;
+				};
+				*/	
+			};
+
+			adc@f804c000 {
+				/delete-property/atmel,adc-ts-wires;
+				/delete-property/atmel,adc-ts-pressure-threshold;	
+
+				trigger@0 {
+					trigger-name = "external-any";
+				};
+
+				trigger@1 {
+                                        trigger-name = "external-any";
+                                };
+
+				trigger@2 {
+                                        trigger-name = "external-any";
+                                };
+				
+				trigger@3 {
+                                        trigger-name = "external-any";
+                                };
+			};
+
+			mmc@f0008000 {
+				slot@0 {
+					cd-gpios = <&pioA 21 GPIO_ACTIVE_HIGH>;
+				};
+			};
+
+			/* /dev/ttyS1 RS485 */
+			usart0: serial@f801c000 {
+				status = "okay";
+				pinctrl-0 = <&pinctrl_usart0 
+					     &pinctrl_usart0_rts 
+					     &pinctrl_usart0_cts>;
+				linux,rs485-enabled-at-boot-time;
+				rs485-rts-delay = <0 0>;
+			};
+
+			/* /dev/ttyS2 */
+			usart1: serial@f8020000 {
+				status = "okay";
+				pinctrl-0 = <&pinctrl_usart1 
+					     &pinctrl_usart1_rts 
+					     &pinctrl_usart1_cts>;
+			};
+
+			i2c0: i2c@f8010000 {
+				eeprom@0x50 {
+					compatible = "microchip,24c02";
+					reg = <0x50>;
+					pagesize = <16>;
+				};
+
+				/delete-node/camera@0x30;				
+				/delete-node/wm8731@1a;
+			};
+
+			macb0: ethernet@f802c000 {
+				phy-mode = "rmii";
+				status = "okay";
+			};
+
+		};
+	};
+};
+
