@@ -7,7 +7,7 @@
 GHOSTSCRIPT_VERSION = 9.21
 GHOSTSCRIPT_SITE = https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921
 GHOSTSCRIPT_SOURCE = ghostscript-$(GHOSTSCRIPT_VERSION).tar.xz
-GHOSTSCRIPT_LICENSE = AGPLv3
+GHOSTSCRIPT_LICENSE = AGPL-3.0
 GHOSTSCRIPT_LICENSE_FILES = LICENSE
 # 0001-Fix-cross-compilation-issue.patch
 GHOSTSCRIPT_AUTORECONF = YES
@@ -15,6 +15,7 @@ GHOSTSCRIPT_DEPENDENCIES = \
 	host-lcms2 \
 	host-libjpeg \
 	host-pkgconf \
+	host-zlib \
 	fontconfig \
 	ghostscript-fonts \
 	jpeg \
@@ -31,7 +32,7 @@ endef
 GHOSTSCRIPT_POST_PATCH_HOOKS += GHOSTSCRIPT_REMOVE_LIBS
 
 GHOSTSCRIPT_CONF_ENV = \
-	CCAUX=$(HOSTCC) \
+	CCAUX="$(HOSTCC)" \
 	CFLAGSAUX="$(HOST_CFLAGS) $(HOST_LDFLAGS)"
 
 GHOSTSCRIPT_CONF_OPTS = \

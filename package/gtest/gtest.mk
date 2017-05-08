@@ -8,7 +8,7 @@ GTEST_VERSION = release-1.8.0
 GTEST_SITE = $(call github,google,googletest,$(GTEST_VERSION))
 GTEST_INSTALL_STAGING = YES
 GTEST_INSTALL_TARGET = NO
-GTEST_LICENSE = BSD-3c
+GTEST_LICENSE = BSD-3-Clause
 GTEST_LICENSE_FILES = googletest/LICENSE
 
 ifeq ($(BR2_PACKAGE_GTEST_GMOCK),y)
@@ -36,6 +36,13 @@ HOST_GTEST_GMOCK_PYTHONPATH = \
 # For further details, refer to the explaination given in the README file from
 # the gtest sources.
 GTEST_CONF_OPTS = -DBUILD_SHARED_LIBS=OFF
+
+# Ensure that GTest is compiled with -fPIC to allow linking the static
+# libraries with dynamically linked programs. This is not a requirement
+# for most architectures but is mandatory for ARM.
+ifeq ($(BR2_STATIC_LIBS),)
+GTEST_CONF_OPTS += -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+endif
 
 GTEST_CONF_OPTS += -DBUILD_GTEST=ON
 

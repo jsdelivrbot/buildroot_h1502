@@ -4,11 +4,11 @@
 #
 ################################################################################
 
-PYTHON3_VERSION_MAJOR = 3.5
-PYTHON3_VERSION = $(PYTHON3_VERSION_MAJOR).2
+PYTHON3_VERSION_MAJOR = 3.6
+PYTHON3_VERSION = $(PYTHON3_VERSION_MAJOR).1
 PYTHON3_SOURCE = Python-$(PYTHON3_VERSION).tar.xz
 PYTHON3_SITE = http://python.org/ftp/python/$(PYTHON3_VERSION)
-PYTHON3_LICENSE = Python software foundation license v2, others
+PYTHON3_LICENSE = Python-2.0, others
 PYTHON3_LICENSE_FILES = LICENSE
 
 # Python itself doesn't use libtool, but it includes the source code
@@ -24,19 +24,19 @@ PYTHON3_LIBTOOL_PATCH = NO
 # installed in $(HOST_DIR), as it is needed when cross-compiling
 # third-party Python modules.
 
-HOST_PYTHON3_CONF_OPTS += 	\
-	--without-ensurepip	\
-	--without-cxx-main 	\
-	--disable-sqlite3	\
-	--disable-tk		\
-	--with-expat=system	\
-	--disable-curses	\
-	--disable-codecs-cjk	\
-	--disable-nis		\
-	--enable-unicodedata	\
-	--disable-test-modules	\
-	--disable-idle3		\
-	--disable-ossaudiodev	\
+HOST_PYTHON3_CONF_OPTS += \
+	--without-ensurepip \
+	--without-cxx-main \
+	--disable-sqlite3 \
+	--disable-tk \
+	--with-expat=system \
+	--disable-curses \
+	--disable-codecs-cjk \
+	--disable-nis \
+	--enable-unicodedata \
+	--disable-test-modules \
+	--disable-idle3 \
+	--disable-ossaudiodev \
 	--disable-openssl
 
 # Make sure that LD_LIBRARY_PATH overrides -rpath.
@@ -151,15 +151,15 @@ PYTHON3_CONF_ENV += ac_cv_func_wcsftime=no
 endif
 
 PYTHON3_CONF_OPTS += \
-	--without-ensurepip	\
-	--without-cxx-main 	\
-	--with-system-ffi	\
-	--disable-pydoc		\
-	--disable-test-modules	\
-	--disable-lib2to3	\
-	--disable-tk		\
-	--disable-nis		\
-	--disable-idle3		\
+	--without-ensurepip \
+	--without-cxx-main \
+	--with-system-ffi \
+	--disable-pydoc \
+	--disable-test-modules \
+	--disable-lib2to3 \
+	--disable-tk \
+	--disable-nis \
+	--disable-idle3 \
 	--disable-pyc-build
 
 # Python builds two tools to generate code: 'pgen' and
@@ -232,7 +232,7 @@ HOST_PYTHON3_POST_INSTALL_HOOKS += HOST_PYTHON3_INSTALL_SYMLINK
 endif
 
 # Provided to other packages
-PYTHON3_PATH = $(TARGET_DIR)/usr/lib/python$(PYTHON3_VERSION_MAJOR)/sysconfigdata/:$(TARGET_DIR)/usr/lib/python$(PYTHON3_VERSION_MAJOR)/site-packages/
+PYTHON3_PATH = $(TARGET_DIR)/usr/lib/python$(PYTHON3_VERSION_MAJOR)/:$(TARGET_DIR)/usr/lib/python$(PYTHON3_VERSION_MAJOR)/site-packages/
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
@@ -247,9 +247,10 @@ endif
 define PYTHON3_CREATE_PYC_FILES
 	$(PYTHON3_FIX_TIME)
 	PYTHONPATH="$(PYTHON3_PATH)" \
-	$(HOST_DIR)/usr/bin/python$(PYTHON3_VERSION_MAJOR) \
-		support/scripts/pycompile.py $(if $(BR2_REPRODUCIBLE),--force) \
-		$(TARGET_DIR)/usr/lib/python$(PYTHON3_VERSION_MAJOR)
+	cd $(TARGET_DIR) && $(HOST_DIR)/usr/bin/python$(PYTHON3_VERSION_MAJOR) \
+		$(TOPDIR)/support/scripts/pycompile.py \
+		$(if $(BR2_REPRODUCIBLE),--force) \
+		usr/lib/python$(PYTHON3_VERSION_MAJOR)
 endef
 
 ifeq ($(BR2_PACKAGE_PYTHON3_PYC_ONLY)$(BR2_PACKAGE_PYTHON3_PY_PYC),y)
